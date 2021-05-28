@@ -4,6 +4,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const request = require("request");
 const https = require('https');
+require('dotenv').config();
 
 const app = express();
 
@@ -33,11 +34,11 @@ app.post("/",function(req, res){
     ]
   }
   const jsonData = JSON.stringify(data);
-  const url="https://us6.api.mailchimp.com/3.0/lists/7ae6c91dc2";
+  const url="https://us6.api.mailchimp.com/3.0/lists/"+process.env.LIST_ID+";
 
   const options={
     method:"POST",
-    auth: "ab:d431aa0d27c28e4fea1c58e09755043d-us6"
+    auth: "ab:"+process.env.API_KEY+"
   }
 
   const request=https.request(url, options, function(response){
@@ -67,10 +68,3 @@ app.post("/failure", function(req, res){
 app.listen(process.env.PORT || 3000, function(){
   console.log("server started");
 });
-
-//'{"name":"","contact":{"company":"","address1":"","address2":"","city":"","state":"","zip":"","country":"","phone":""},"permission_reminder":"","use_archive_bar":false,"campaign_defaults":{"from_name":"","from_email":"","subject":"","language":""},"notify_on_subscribe":"","notify_on_unsubscribe":"","email_type_option":false,"visibility":"pub","double_optin":false,"marketing_permissions":false}'
-
-
-//d431aa0d27c28e4fea1c58e09755043d-us6
-
-//7ae6c91dc2
